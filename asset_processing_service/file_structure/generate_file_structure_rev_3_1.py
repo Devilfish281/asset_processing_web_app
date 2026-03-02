@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-# multi_agent_report_writing_2/src/agent/file_structure/generate_file_structure.py
+# asset_processing_service/file_structure/generate_file_structure.py
+
 
 import io
 import os

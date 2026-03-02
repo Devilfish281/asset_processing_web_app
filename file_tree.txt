@@ -1,0 +1,282 @@
+The File structure for my program is BELOW:
+├── C:\Users\ME\Documents\fullstack\Projects\asset_processing_web_app/
+│   └── .gitignore
+    ├── ,codex/
+    │   └── config.toml
+    ├── .agent/
+    │   └── PLANS.md
+    ├── asset_processing_service/
+    │   ├── .env
+    │   ├── .gitignore
+    │   ├── AGENTS.md
+    │   ├── Dockerfile
+    │   ├── README.md
+    │   ├── __init__.py
+    │   ├── poetry.lock
+    │   └── pyproject.toml
+        └── src/
+            └── asset_processing_service/
+                ├── __init__.py
+                ├── api_client.py
+                ├── job_processor.py
+                ├── life_goals_agent.py
+                ├── main.py
+                ├── media_processor.py
+                ├── models.py
+                └── setup_config.py
+                └── my_utils/
+                    ├── __init__.py
+                    ├── configuration.py
+                    ├── env_loader.py
+                    ├── llm_loader.py
+                    ├── logger_setup.py
+                    ├── postgres_store_loader.py
+                    ├── token_usage.py
+                    └── token_usage_tier.json
+    ├── nextjs/
+    │   ├── .gitignore
+    │   ├── README.md
+    │   ├── components.json
+    │   ├── eslint.config.mjs
+    │   ├── next-env.d.ts
+    │   ├── next.config.ts
+    │   ├── package-lock.json
+    │   ├── package.json
+    │   ├── postcss.config.mjs
+    │   └── tsconfig.json
+        ├── .next/
+            ├── dev/
+            │   ├── build-manifest.json
+            │   ├── fallback-build-manifest.json
+            │   ├── package.json
+            │   ├── prerender-manifest.json
+            │   ├── routes-manifest.json
+            │   └── trace
+                ├── cache/
+                │   ├── .rscinfo
+                │   └── next-devtools-config.json
+                    └── turbopack/
+                        └── 23c46498/
+                            ├── 00000001.sst
+                            ├── 00000003.sst
+                            ├── 00000004.sst
+                            ├── 00000005.sst
+                            ├── 00000006.meta
+                            ├── 00000008.meta
+                            ├── 00000009.meta
+                            ├── 00000010.meta
+                            ├── 00000015.sst
+                            ├── 00000016.sst
+                            ├── 00000017.sst
+                            ├── 00000018.sst
+                            ├── 00000019.meta
+                            ├── 00000020.meta
+                            ├── 00000022.meta
+                            ├── 00000023.meta
+                            ├── 00000024.sst
+                            ├── 00000026.sst
+                            ├── 00000027.sst
+                            ├── 00000028.sst
+                            ├── 00000029.meta
+                            ├── 00000030.meta
+                            ├── 00000032.meta
+                            ├── 00000033.meta
+                            ├── 00000034.sst
+                            ├── 00000036.sst
+                            ├── 00000037.meta
+                            ├── 00000038.meta
+                            ├── 00000040.sst
+                            ├── 00000042.sst
+                            ├── 00000043.meta
+                            ├── 00000044.meta
+                            ├── 00000046.sst
+                            ├── 00000048.sst
+                            ├── 00000049.sst
+                            ├── 00000050.sst
+                            ├── 00000051.meta
+                            ├── 00000052.meta
+                            ├── 00000054.meta
+                            ├── 00000055.meta
+                            ├── 00000056.sst
+                            ├── 00000058.sst
+                            ├── 00000059.meta
+                            ├── 00000060.meta
+                            ├── 00000062.sst
+                            ├── 00000064.sst
+                            ├── 00000065.sst
+                            ├── 00000066.sst
+                            ├── 00000067.meta
+                            ├── 00000068.meta
+                            ├── 00000070.meta
+                            ├── 00000071.meta
+                            ├── 00000072.sst
+                            ├── 00000074.sst
+                            ├── 00000075.meta
+                            ├── 00000076.meta
+                            ├── 00000078.sst
+                            ├── 00000080.sst
+                            ├── 00000081.sst
+                            ├── 00000082.sst
+                            ├── 00000083.meta
+                            ├── 00000084.meta
+                            ├── 00000086.meta
+                            ├── 00000087.meta
+                            ├── 00000088.sst
+                            ├── 00000090.sst
+                            ├── 00000091.sst
+                            ├── 00000092.sst
+                            ├── 00000093.meta
+                            ├── 00000094.meta
+                            ├── 00000095.meta
+                            ├── 00000096.meta
+                            ├── 00000102.sst
+                            ├── 00000103.sst
+                            ├── 00000104.sst
+                            ├── 00000105.sst
+                            ├── 00000106.meta
+                            ├── 00000108.meta
+                            ├── 00000109.meta
+                            ├── 00000110.meta
+                            ├── 00000111.sst
+                            ├── 00000112.sst
+                            ├── 00000113.meta
+                            ├── 00000114.del
+                            ├── CURRENT
+                            └── LOG
+                ├── logs/
+                │   └── next-development.log
+                ├── server/
+                │   ├── app-paths-manifest.json
+                │   ├── interception-route-rewrite-manifest.js
+                │   ├── middleware-build-manifest.js
+                │   ├── middleware-manifest.json
+                │   ├── next-font-manifest.js
+                │   ├── next-font-manifest.json
+                │   ├── pages-manifest.json
+                │   ├── server-reference-manifest.js
+                │   └── server-reference-manifest.json
+                    ├── app/
+                    │   ├── page.js
+                    │   ├── page.js.map
+                    │   └── page_client-reference-manifest.js
+                        └── page/
+                            ├── app-paths-manifest.json
+                            ├── build-manifest.json
+                            ├── next-font-manifest.json
+                            ├── react-loadable-manifest.json
+                            └── server-reference-manifest.json
+                    └── chunks/
+                        └── ssr/
+                            ├── [externals]__e8a2741f._.js
+                            ├── [externals]__e8a2741f._.js.map
+                            ├── [externals]_next_dist_c80f7c8f._.js
+                            ├── [externals]_next_dist_c80f7c8f._.js.map
+                            ├── [root-of-the-server]__305743d6._.js
+                            ├── [root-of-the-server]__305743d6._.js.map
+                            ├── [root-of-the-server]__358bf94e._.js
+                            ├── [root-of-the-server]__358bf94e._.js.map
+                            ├── [root-of-the-server]__a8ab9a0d._.js
+                            ├── [root-of-the-server]__a8ab9a0d._.js.map
+                            ├── [root-of-the-server]__a9fea3fa._.js
+                            ├── [root-of-the-server]__a9fea3fa._.js.map
+                            ├── [turbopack]_runtime.js
+                            ├── [turbopack]_runtime.js.map
+                            ├── _next-internal_server_app_page_actions_39d4fc33.js
+                            ├── _next-internal_server_app_page_actions_39d4fc33.js.map
+                            ├── node_modules_5593f1f8._.js
+                            ├── node_modules_5593f1f8._.js.map
+                            ├── node_modules_e2d1c5df._.js
+                            ├── node_modules_e2d1c5df._.js.map
+                            ├── node_modules_next_dist_3e1f69b5._.js
+                            ├── node_modules_next_dist_3e1f69b5._.js.map
+                            ├── node_modules_next_dist_client_components_9774470f._.js
+                            ├── node_modules_next_dist_client_components_9774470f._.js.map
+                            ├── node_modules_next_dist_client_components_builtin_forbidden_45780354.js
+                            ├── node_modules_next_dist_client_components_builtin_forbidden_45780354.js.map
+                            ├── node_modules_next_dist_client_components_builtin_global-error_ece394eb.js
+                            ├── node_modules_next_dist_client_components_builtin_global-error_ece394eb.js.map
+                            ├── node_modules_next_dist_client_components_builtin_unauthorized_15817684.js
+                            ├── node_modules_next_dist_client_components_builtin_unauthorized_15817684.js.map
+                            ├── node_modules_next_dist_f358593f._.js
+                            ├── node_modules_next_dist_f358593f._.js.map
+                            ├── src_app_5b2047f8._.js
+                            └── src_app_5b2047f8._.js.map
+                ├── static/
+                    ├── chunks/
+                    │   ├── [next]_internal_font_google_geist_a71539c9_module_css_bad6b30c._.single.css
+                    │   ├── [next]_internal_font_google_geist_a71539c9_module_css_bad6b30c._.single.css.map
+                    │   ├── [next]_internal_font_google_geist_mono_8d43a2aa_module_css_bad6b30c._.single.css
+                    │   ├── [next]_internal_font_google_geist_mono_8d43a2aa_module_css_bad6b30c._.single.css.map
+                    │   ├── [root-of-the-server]__0f0ba101._.css
+                    │   ├── [root-of-the-server]__0f0ba101._.css.map
+                    │   ├── [turbopack]_browser_dev_hmr-client_hmr-client_ts_956a0d3a._.js
+                    │   ├── [turbopack]_browser_dev_hmr-client_hmr-client_ts_956a0d3a._.js.map
+                    │   ├── [turbopack]_browser_dev_hmr-client_hmr-client_ts_c7192189._.js
+                    │   ├── [turbopack]_browser_dev_hmr-client_hmr-client_ts_c8c997ce._.js
+                    │   ├── [turbopack]_browser_dev_hmr-client_hmr-client_ts_c8c997ce._.js.map
+                    │   ├── _23a915ee._.js.map
+                    │   ├── _a0ff3932._.js
+                    │   ├── node_modules_@swc_helpers_cjs_d80fb378._.js
+                    │   ├── node_modules_@swc_helpers_cjs_d80fb378._.js.map
+                    │   ├── node_modules_next_dist_be32b49c._.js
+                    │   ├── node_modules_next_dist_be32b49c._.js.map
+                    │   ├── node_modules_next_dist_build_polyfills_polyfill-nomodule.js
+                    │   ├── node_modules_next_dist_build_polyfills_polyfill-nomodule.js.map
+                    │   ├── node_modules_next_dist_client_17643121._.js
+                    │   ├── node_modules_next_dist_client_17643121._.js.map
+                    │   ├── node_modules_next_dist_client_components_builtin_global-error_1cf6b850.js
+                    │   ├── node_modules_next_dist_compiled_a0e4c7b4._.js
+                    │   ├── node_modules_next_dist_compiled_a0e4c7b4._.js.map
+                    │   ├── node_modules_next_dist_compiled_next-devtools_index_1dd7fb59.js
+                    │   ├── node_modules_next_dist_compiled_next-devtools_index_1dd7fb59.js.map
+                    │   ├── node_modules_next_dist_compiled_react-dom_1e674e59._.js
+                    │   ├── node_modules_next_dist_compiled_react-dom_1e674e59._.js.map
+                    │   ├── node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js
+                    │   ├── node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js.map
+                    │   ├── node_modules_next_dist_f3530cac._.js
+                    │   ├── node_modules_next_dist_f3530cac._.js.map
+                    │   ├── src_app_favicon_ico_mjs_81d86e48._.js
+                    │   ├── src_app_globals_css_bad6b30c._.single.css
+                    │   ├── src_app_globals_css_bad6b30c._.single.css.map
+                    │   ├── src_app_layout_tsx_1cf6b850._.js
+                    │   └── turbopack-_23a915ee._.js
+                    ├── development/
+                    │   ├── _buildManifest.js
+                    │   ├── _clientMiddlewareManifest.json
+                    │   └── _ssgManifest.js
+                    └── media/
+                        ├── 4fa387ec64143e14-s.c1fdd6c2.woff2
+                        ├── 7178b3e590c64307-s.b97b3418.woff2
+                        ├── 797e433ab948586e-s.p.dbea232f.woff2
+                        ├── 8a480f0b521d4e75-s.8e0177b5.woff2
+                        ├── bbc41e54d2fcbd21-s.799d8ef8.woff2
+                        ├── caa3a2e1cccd8315-s.p.853070df.woff2
+                        └── favicon.0b3bf435.ico
+                └── types/
+                    ├── cache-life.d.ts
+                    ├── routes.d.ts
+                    └── validator.ts
+            └── types/
+                ├── cache-life.d.ts
+                ├── routes.d.ts
+                └── validator.ts
+        ├── public/
+        │   ├── file.svg
+        │   ├── globe.svg
+        │   ├── next.svg
+        │   ├── vercel.svg
+        │   └── window.svg
+        └── src/
+            ├── app/
+            │   ├── favicon.ico
+            │   ├── globals.css
+            │   ├── layout.tsx
+            │   └── page.tsx
+            ├── components/
+                └── ui/
+                    └── button.tsx
+            └── lib/
+                └── utils.ts
+    └── var/
+        └── logs/
+            └── reportlog.log
