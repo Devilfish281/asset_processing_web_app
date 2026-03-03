@@ -15,7 +15,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+/lib/
 lib64/
 parts/
 sdist/
@@ -68,3 +68,13 @@ Thumbs.db
 .DS_Store
 
 db/ai_advice.db
+
+# Next.js
+nextjs/node_modules/
+nextjs/.next/
+nextjs/out/
+nextjs/.turbo/
+nextjs/next-env.d.ts
+
+# Vercel
+nextjs/.vercel/
