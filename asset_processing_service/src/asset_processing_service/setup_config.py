@@ -157,6 +157,12 @@ class c_setup_config(BaseModel):
         description="Redis URL for connecting to Redis.",
     )
 
+    # REDIS_URL_FALLBACK
+    redis_url_fallback: Optional[str] = Field(
+        default=os.getenv("REDIS_URL_FALLBACK", "redis://localhost:6379/0"),
+        description="Fallback Redis URL if the primary REDIS_URL is not set or fails to connect.",
+    )
+
     # DB_URL = os.getenv("DB_URL")
     db_url: Optional[str] = Field(
         default=os.getenv("DB_URL", ""),
@@ -328,7 +334,6 @@ class c_setup_config(BaseModel):
         self.db_url_fallback = value
 
     def get_db_url_fallback(self) -> str:
-
         value = (self.db_url_fallback or "").strip()
 
         if not value:

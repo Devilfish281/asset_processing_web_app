@@ -49,6 +49,9 @@ from asset_processing_service.my_utils.logger_setup import setup_logger
 from asset_processing_service.my_utils.postgres_store_loader import (
     open_postgres_store_with_fallback,
 )
+from asset_processing_service.my_utils.redis_saver_loader import (
+    open_redis_saver_with_fallback,
+)
 from asset_processing_service.setup_config import c_setup_config
 
 load_dotenv_once()
@@ -559,13 +562,23 @@ async def async_main(test_numbers: Optional[list[int]] = None) -> int:
         #     "postgresql://postgres:postgres@localhost:5432/langgraph?sslmode=disable",
         # )
 
-        redis_uri = (
-            setup_config.get_redis_url()
-        )  # This will handle fallback logic and validation
+        # redis_uri = (
+        #     setup_config.get_redis_url()
+        # )  # This will handle fallback logic and validation
 
-        # --- Checkpointer (short-term / per-thread) ---
-        # Open RedisSaver context manager and keep it for app lifetime
-        checkpointer_cm = RedisSaver.from_conn_string(redis_uri)
+        # # --- Checkpointer (short-term / per-thread) ---
+        # # Open RedisSaver context manager and keep it for app lifetime
+        # checkpointer_cm = RedisSaver.from_conn_string(redis_uri)
+        # checkpointer = checkpointer_cm.__enter__()
+        # # Create tables (safe to run at startup)
+        # checkpointer.setup()
+        redis_url = setup_config.get_redis_url()
+        redis_url_fallback = getattr(setup_config, "redis_url_fallback", None)
+
+        checkpointer_cm, checkpointer = open_redis_saver_with_fallback(
+            redis_url=redis_url,
+            redis_url_fallback=redis_url_fallback,
+        )
         checkpointer = checkpointer_cm.__enter__()
         # Create tables (safe to run at startup)
         checkpointer.setup()

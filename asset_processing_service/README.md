@@ -95,3 +95,66 @@ poetry run pytest -h
 Note: if you added `--strict-markers` to `addopts` in `pyproject.toml`, pytest will error on unknown markers (useful for catching typos). ([python-basics-tutorial.readthedocs.io][1])
 
 [1]: https://python-basics-tutorial.readthedocs.io/en/latest/test/pytest/config.html?utm_source=chatgpt.com "Configuration - Python Basics"
+
+#### Docker
+
+## Build the image
+
+```bash
+docker build -t asset-processing-service .
+```
+
+Note:You already have these containers running in Docker Desktop:
+
+- `redis` (port 6379)
+- `lg-postgres` (port 5432)
+
+### Step 1) Put them on the same Docker network
+
+1. Create a network (one time):
+
+```bash
+docker network create apw-net
+```
+
+2. Attach the already-running containers to that network:
+
+```bash
+docker network connect apw-net redis
+docker network connect apw-net lg-postgres
+```
+
+### Step 2) Run your app container on the same network
+
+```bash
+docker run --rm ^
+  --name asset-processing-service ^
+  --network apw-net ^
+  --env-file .env ^
+  asset-processing-service:dev
+```
+
+Note:
+--env-file .env tells Docker “read my .env file and inject those variables.”
+
+--rm removes the container after it stops (keeps things clean).
+
+OR
+
+```bash
+docker run --rm ^
+  --name asset-processing-service ^
+  --network apw-net ^
+  --env-file .env ^
+  asset-processing-service:dev printenv
+```
+
+Note: printenv prints the container’s environment so you can verify the variables arrived.
+
+Why this works:
+
+- On a user-defined Docker network, containers can reach each other using container names (Docker’s built-in DNS). ([Docker Documentation][2])
+
+---
+
+[2]: https://docs.docker.com/network/#dns-services "Docker Networking - DNS Services"
