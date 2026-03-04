@@ -98,7 +98,30 @@ Note: if you added `--strict-markers` to `addopts` in `pyproject.toml`, pytest w
 
 #### Docker
 
-## Build the image
+## How to run it
+
+Note: From asset_processing_service/ (where the compose file is):
+
+```bash
+docker compose up -d --build
+docker compose logs -f --tail 200 worker
+```
+
+# To see all logs:
+
+```bash
+docker compose down --remove-orphans
+docker compose up --build
+```
+
+## Quick mental model (super simple)
+
+- **Dockerfile** = recipe for an image
+- **`docker build`** = “cook the recipe”
+- **`docker run`** = “start a container from that cooked image”
+- **`docker compose up --build`** = “cook any recipes in the compose file _and_ start everything together”
+
+## OLD Build the image
 
 ```bash
 docker build -t asset-processing-service .

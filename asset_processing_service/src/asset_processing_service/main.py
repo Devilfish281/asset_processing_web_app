@@ -192,6 +192,7 @@ async def job_fetcher_run(
     job_queue: asyncio.Queue,
     jobs_pending_or_in_progress: set,
 ):
+    logger.info(f"job_fetcher_rune: Starting job fetcher loop...")
     if setup_config.testing_flag2:
         logger.info("job_fetcher_run is running in TESTING MODE ")
         job_fetcher_run_cnt = 0
@@ -210,7 +211,9 @@ async def job_fetcher_run(
                     break  # Exit the loop to stop the job fetcher after reaching the specified run number
 
             current_time = datetime.now().timestamp()
-            logger.info(f"Fetching jobs current time: {current_time}")
+            if setup_config.testing_flag2:
+                logger.info(f"Fetching jobs current time: {current_time}")
+
             # Fetch jobs from the API and add them to the queue if they are not already being processed
             jobs = await fetch_jobs()
 
@@ -292,6 +295,7 @@ async def worker_run(
     job_locks: dict,
     graphs: dict,
 ):
+    logger.info(f"Worker {worker_id} starting...")
     if setup_config.testing_flag2:
         logger.info("worker_run is running in TESTING MODE returning early ")
         return
@@ -468,6 +472,8 @@ async def async_main(test_numbers: Optional[list[int]] = None) -> int:
     try:
         # -------- STARTUP (runs once) --------
         init_runtime()
+        # await drop_asset_processing_jobs_table()  # FIX THIS NOW - drop table to ensure clean slate for testing. In production, you would not do this.
+        await ensure_postgres_tables()
 
         # Defaults (no tests selected)
         my_testing_normal_job_flag = False
@@ -493,9 +499,6 @@ async def async_main(test_numbers: Optional[list[int]] = None) -> int:
                 my_testing_max_attempts_job_flag = 2 in selected
                 my_testing_in_progress_job_flag = 3 in selected
                 my_testing_stuck_job_flag = 4 in selected
-
-            # await drop_asset_processing_jobs_table()  # FIX THIS NOW - drop table to ensure clean slate for testing. In production, you would not do this.
-            await ensure_postgres_tables()
 
             # You can remove this after confirming that jobs are being created and processed correctly
             await truncate_asset_processing_jobs_table()
@@ -579,9 +582,6 @@ async def async_main(test_numbers: Optional[list[int]] = None) -> int:
             redis_url=redis_url,
             redis_url_fallback=redis_url_fallback,
         )
-        checkpointer = checkpointer_cm.__enter__()
-        # Create tables (safe to run at startup)
-        checkpointer.setup()
 
         # --- Store (long-term / cross-thread) ---
         # store_cm = PostgresStore.from_conn_string(db_url)

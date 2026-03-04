@@ -145,7 +145,7 @@ async def fetch_jobs() -> List[AssetProcessingJob]:
             """
         )
 
-        logger.info(f"Fetched {len(result)} jobs from database.")
+        # logger.info(f"Fetched {len(result)} jobs from database.")
 
         availableJobs: List[AssetProcessingJob] = []
         for row in result:
