@@ -48,6 +48,8 @@ function SidebarNav({ isMobile, isCollapsed }: SidebarNavProps) {
     <div className="space-y4 overflow-hidden mb-auto">
       {navItems.map((item) => (
         <Button
+          variant="ghost"
+          asChild
           key={item.href}
           className={cn(
             "w-full justify-start hover:text-main hover:bg-gray-200 flex items-center text-lg font-medium",

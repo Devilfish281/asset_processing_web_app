@@ -1,20 +1,63 @@
 // src/components/Sidebar.tsx
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import SidebarNav from "./SidebarNav";
+import SidebarToggle from "./SidebarToggle";
+
+const MOBILE_WINDOW_WIDTH_LIMIT = 1024;
 
 function Sidebar() {
   const [isMobile, setIsMobile] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   {
     /* TODO: Handle Resize */
   }
-  useEffect(() => {}, []);
+  //  Handle Resize
+  useEffect(() => {
+    const handleResize = () => {
+      const calculatedIsMobile = window.innerWidth < MOBILE_WINDOW_WIDTH_LIMIT;
+      setIsMobile(calculatedIsMobile);
+      if (calculatedIsMobile) {
+        setIsCollapsed(false);
+      } else {
+        setIsOpen(false);
+      }
+    };
+
+    handleResize();
+    setIsMounted(true);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        if (isMobile && isOpen) {
+          setIsOpen(false);
+        }
+      }
+    };
+
+    window.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isMobile, isOpen]);
 
   const toggleSidebar = () => {
     if (isMobile) {
@@ -24,11 +67,13 @@ function Sidebar() {
     }
   };
 
-  const handleOutsideClick = () => {};
-
   const renderMenuIcon = () => {
     return isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />;
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div>
@@ -47,6 +92,7 @@ function Sidebar() {
       {/* TODO: Store all components in nav */}
       {(!isMobile || isOpen) && (
         <div
+          ref={sidebarRef}
           className={cn(
             "bg-gray-100 flex flex-col h-screen transition-all duration-300 overflow-y-auto",
             // MOBILE STYLES
@@ -69,19 +115,21 @@ function Sidebar() {
               isMobile ? "pt-16" : "pt-10",
             )}
           >
-            <h1 className="text-4xl font-bold mb-10">AI Marketing Platform</h1>
-            <div className="font-sans text-2xl">Poppins test</div>
+            {!isCollapsed && (
+              <h1 className="text-4xl font-bold mb-10">AI Life Coach</h1>
+            )}
+
             {/* TODO: <SidebarNav /> */}
             <SidebarNav isMobile={isMobile} isCollapsed={isCollapsed} />
           </div>
           <div>
             {/* TODO: User profile from clerk */}
-            {/* {!isMobile && (
+            {!isMobile && (
               <SidebarToggle
                 isCollapsed={isCollapsed}
                 toggleSidebar={toggleSidebar}
               />
-            )} */}
+            )}
           </div>
         </div>
       )}
