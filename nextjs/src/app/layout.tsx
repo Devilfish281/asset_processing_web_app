@@ -1,5 +1,7 @@
+// C:\Users\ME\Documents\fullstack\Projects\asset_processing_web_app\nextjs\src\app\layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google"; // change code
+import { ClerkProvider } from "@clerk/nextjs"; // add code
 
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -36,7 +38,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`} // change code
       >
-        {children}
+        <ClerkProvider>{children}</ClerkProvider> {/* add code */}
       </body>
     </html>
   );

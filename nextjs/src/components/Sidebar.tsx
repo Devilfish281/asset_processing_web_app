@@ -7,38 +7,26 @@ import { cn } from "@/lib/utils";
 import SidebarNav from "./SidebarNav";
 import SidebarToggle from "./SidebarToggle";
 
-const MOBILE_WINDOW_WIDTH_LIMIT = 1024;
+import {
+  Show,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
+
+import UserProfileSection from "./UserProfileSection";
 
 function Sidebar() {
-  const [isMobile, setIsMobile] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const { isSignedIn } = useUser();
+
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   {
     /* TODO: Handle Resize */
   }
-  //  Handle Resize
-  useEffect(() => {
-    const handleResize = () => {
-      const calculatedIsMobile = window.innerWidth < MOBILE_WINDOW_WIDTH_LIMIT;
-      setIsMobile(calculatedIsMobile);
-      if (calculatedIsMobile) {
-        setIsCollapsed(false);
-      } else {
-        setIsOpen(false);
-      }
-    };
-
-    handleResize();
-    setIsMounted(true);
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -46,7 +34,7 @@ function Sidebar() {
         sidebarRef.current &&
         !sidebarRef.current.contains(event.target as Node)
       ) {
-        if (isMobile && isOpen) {
+        if (isOpen) {
           setIsOpen(false);
         }
       }
@@ -57,23 +45,19 @@ function Sidebar() {
     return () => {
       window.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [isMobile, isOpen]);
+  }, [isOpen]);
 
   const toggleSidebar = () => {
-    if (isMobile) {
-      setIsOpen((prev) => !prev);
-    } else {
-      setIsCollapsed((prev) => !prev);
-    }
+    setIsOpen((prev) => !prev);
+  };
+
+  const toggleCollapse = () => {
+    setIsCollapsed((prev) => !prev);
   };
 
   const renderMenuIcon = () => {
     return isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />;
   };
-
-  if (!isMounted) {
-    return null;
-  }
 
   return (
     <div>
@@ -89,50 +73,42 @@ function Sidebar() {
       >
         {renderMenuIcon()}
       </Button>
-      {/* TODO: Store all components in nav */}
-      {(!isMobile || isOpen) && (
-        <div
-          ref={sidebarRef}
-          className={cn(
-            "bg-gray-100 flex flex-col h-screen transition-all duration-300 overflow-y-auto",
-            // MOBILE STYLES
-            !isMobile
-              ? ""
-              : `fixed inset-y-0 left-0 z-40 w-64 transform ${
-                  isOpen ? "translate-x-0" : "translate-x-full"
-                }`,
-            // DESKTOP STYLES
-            isMobile
-              ? ""
-              : isCollapsed
-                ? "w-28 h-screen sticky top-0"
-                : "w-64 h-screen sticky top-0",
-          )}
-        >
-          <div
-            className={cn(
-              "flex flex-col grow p-6",
-              isMobile ? "pt-16" : "pt-10",
-            )}
-          >
-            {!isCollapsed && (
-              <h1 className="text-4xl font-bold mb-10">AI Life Coach</h1>
-            )}
 
-            {/* TODO: <SidebarNav /> */}
-            <SidebarNav isMobile={isMobile} isCollapsed={isCollapsed} />
-          </div>
-          <div>
-            {/* TODO: User profile from clerk */}
-            {!isMobile && (
-              <SidebarToggle
-                isCollapsed={isCollapsed}
-                toggleSidebar={toggleSidebar}
-              />
-            )}
-          </div>
+      {/* Store all components in nav */}
+      {/* Sidebar content 114 */}
+      <div
+        ref={sidebarRef}
+        className={cn(
+          "bg-gray-100 flex flex-col h-screen transition-all duration-300 overflow-y-auto",
+          // Base styles for mobile sidebar
+          "fixed inset-y-0 left-0 z-40 w-64 transform",
+          isOpen ? "translate-x-0" : "-translate-x-full",
+          // Adjustments for desktop
+          "lg:translate-x-0 lg:static lg:w-64",
+          isCollapsed && "lg:w-28",
+        )}
+      >
+        {/* Name and menu items <SidebarNav /> Style grow*/}
+        <div className={cn("flex flex-col grow p-6", "pt-16 lg:pt-10")}>
+          {!isCollapsed && (
+            <h1 className="text-4xl font-bold mb-10 hidden lg:block">
+              AI - Life Coach
+            </h1>
+          )}
+
+          <SidebarNav isCollapsed={isCollapsed} />
         </div>
-      )}
+
+        {/* TODO: User profile from clerk */}
+        {/* Sidebar “header” area (Clerk controls) */}
+
+        {/* ------  Sidebar Toggle  ------*/}
+        {isSignedIn && <UserProfileSection isCollapsed={isCollapsed} />}
+        <SidebarToggle
+          isCollapsed={isCollapsed}
+          toggleSidebar={toggleCollapse}
+        />
+      </div>
     </div>
   );
 }
