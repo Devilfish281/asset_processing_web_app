@@ -22,24 +22,54 @@ function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { isSignedIn } = useUser();
 
-  const sidebarRef = useRef<HTMLDivElement>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null); // Changed Code
+  const buttonRef = useRef<HTMLButtonElement | null>(null); // Added Code
 
   {
     /* TODO: Handle Resize */
   }
 
+  // useEffect(() => {
+  //   const handleOutsideClick = (event: MouseEvent) => {
+  //     if (
+  //       sidebarRef.current &&
+  //       !sidebarRef.current.contains(event.target as Node)
+  //     ) {
+  //       if (isOpen) {
+  //         setIsOpen(false);
+  //       }
+  //     }
+  //   };
+
+  //   window.addEventListener("mousedown", handleOutsideClick);
+
+  //   return () => {
+  //     window.removeEventListener("mousedown", handleOutsideClick);
+  //   };
+  // }, [isOpen]);
+
+  // --- handleOutsideClick ---
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target as Node)
-      ) {
-        if (isOpen) {
-          setIsOpen(false);
-        }
-      }
+      const targetNode = event.target as Node; // Added Code
+
+      const clickedInsideSidebar = !!(
+        // Added Code
+        (sidebarRef.current && sidebarRef.current.contains(targetNode))
+      ); // Added Code
+
+      const clickedToggleButton = !!(
+        // Added Code
+        (buttonRef.current && buttonRef.current.contains(targetNode))
+      ); // Added Code
+
+      if (!clickedInsideSidebar && !clickedToggleButton && isOpen) {
+        // Changed Code
+        setIsOpen(false); // Changed Code
+      } // Changed Code
     };
 
+    // --- addEventListener mousedown ---
     window.addEventListener("mousedown", handleOutsideClick);
 
     return () => {
@@ -64,6 +94,7 @@ function Sidebar() {
       {/* Mobile X toggle in the left side of screen */}
 
       <Button
+        ref={buttonRef} // Added Code
         variant="ghost"
         onClick={toggleSidebar}
         className={cn(
