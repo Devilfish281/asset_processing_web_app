@@ -41,6 +41,12 @@ function SidebarNav({ isCollapsed }: SidebarNavProps) {
       icon: Settings,
       isActive: (pathname) => pathname === "/settings",
     },
+    {
+      href: "/todo",
+      label: "Todo",
+      icon: Settings,
+      isActive: (pathname) => pathname === "/todo",
+    },
   ];
 
   return (
