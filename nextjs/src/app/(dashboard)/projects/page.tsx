@@ -1,46 +1,75 @@
+// nextjs/src/app/(dashboard)/projects/page.tsx
 import React from "react";
-
-type Project = {
-  id: number;
-  name: string;
-  description: string;
-};
+import { getJobsForUser } from "@/server/queries";
+import { createJobForUser, createJobTodo } from "@/server/mutation";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import JobList from "@/components/ProjectList";
 
 export default async function ProjectsPage() {
-  const projectPromise = new Promise<Project[]>((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          id: 1,
-          name: "Project 1",
-          description: "Description 1",
-        },
-        {
-          id: 2,
-          name: "Project 2",
-          description: "Description 2",
-        },
-        {
-          id: 3,
-          name: "Project 3",
-          description: "Description 3",
-        },
-      ]);
-    }, 5000);
-  });
+  let { userId, jobs } = await getJobsForUser();
 
-  const projects = await projectPromise;
+  if (jobs.length === 0) {
+    const message =
+      "Hello, this is Mark Dobley. I need to get soil for my elevated planter for my herb garden.";
+
+    await createJobForUser(message);
+    ({ userId, jobs } = await getJobsForUser());
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  // TODO: Fetch projects from database
 
   return (
-    <div>
-      <h1>Projects Page</h1>
-      <div>
-        {projects.map((project) => (
-          <div key={project.id}>
-            <h2>{project.name}</h2>
-            <p>{project.description}</p>
+    <div className="w-full">
+      <div className="max-w-screen-2xl mx-auto p-4 sm:p-6 md:p-8 lg:p-12 mt-2 space-y-6 sm:space-y-8 lg:space-y-10">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6">
+          <div className="space-y-2 sm:space-y-4 mb-4 sm:mb-0">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+              My Jobs
+            </h1>
+            <p className="text-sm sm:text-base text-gray-500">
+              Manage your asset processing jobs effectively using AI
+            </p>
           </div>
-        ))}
+          <form action={createJobTodo} className="w-full sm:w-auto">
+            <Button className="rounded-3xl text-base w-full sm:w-auto">
+              <Plus className="w-4 h-4 mr-1" strokeWidth={3} />
+              New Job Todo
+            </Button>
+          </form>
+        </div>
+        <JobList jobs={jobs} />
+      </div>
+      <div>
+        <div>
+          {jobs.length === 0 ? (
+            <h1>none found for user ID: {userId}</h1>
+          ) : (
+            jobs.map((job) => (
+              <div key={job.id}>
+                {" "}
+                <div>id: {job.id}</div>
+                <div>threadId: {job.threadId}</div>
+                <div>userId: {job.userId}</div>
+                <div>todoKind: {job.todoKind}</div>
+                <div>status: {job.status}</div>
+                <div>attempts: {job.attempts}</div>
+                <div>lastHeartbeat: {job.lastHeartbeat ?? "null"}</div>{" "}
+                <div>errorMessage: {job.errorMessage ?? "null"}</div>{" "}
+                <div>size: {job.size}</div>
+                <div>message: {job.message ?? "null"}</div>
+                <div>lastMsgType: {job.lastMsgType ?? "null"}</div>{" "}
+                <div>lastMsgContent: {job.lastMsgContent ?? "null"}</div>{" "}
+                <div>createdAt: {job.createdAt}</div>
+                <div>updatedAt: {job.updatedAt}</div>
+                <hr />
+              </div>
+            ))
+          )}{" "}
+        </div>
+        {/* TODO: Create project list header with create action */}
+        {/* TODO: Grid of cards to view each project and navigate to detail view */}
       </div>
     </div>
   );

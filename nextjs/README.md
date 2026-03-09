@@ -42,3 +42,36 @@ vercel env pull .env
 ## run Program
 
 https://asset-processing-web-app.vercel.app/projects
+
+## postgreSQL Environment Variables
+
+POSTGRES_URL
+POSTGRES_URL_NON_POOLING
+POSTGRES_URL_NO_SSL
+POSTGRES_PRISMA_URL
+POSTGRES_DATABASE
+
+POSTGRES_USER
+POSTGRES_PASSWORD
+POSTGRES_HOST
+
+## drizzle-kit
+
+yarn drizzle-kit
+yarn drizzle-kit studio
+
+## How the program is structured?
+
+asset_processing_service/ = whole project root
+
+Python app lives in the Python-side folders
+
+Next.js app lives in nextjs/
+
+UI pages are in nextjs/src/app/
+
+DB code is in nextjs/server/db/
+
+Drizzle generated files are in nextjs/drizzle/
+
+static assets are in nextjs/public/
