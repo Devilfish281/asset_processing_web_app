@@ -1,4 +1,6 @@
 // nextjs/src/app/(dashboard)/projects/page.tsx
+// Using Tailwind UI for styling, we will create a dashboard page that lists the user's projects and allows them to create new projects. We will also create a detail view for each project where the user can see the project's details and manage the project's assets and todos.
+// We will use the getJobsForUser query to fetch the jobs for the user and display them in a list. We will also create a form to create new jobs for the user. When the user creates a new job, we will call the createJobForUser mutation to create a new job in the database and then refresh the list of jobs for the user.
 import React from "react";
 import { getJobsForUser } from "@/server/queries";
 import { createJobForUser, createJobTodo } from "@/server/mutation";

@@ -44,6 +44,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 file_structure/chat_gpt/
+chat_gpt/
 app.log
 **/*.log
 

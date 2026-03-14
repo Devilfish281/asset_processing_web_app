@@ -58,6 +58,20 @@ export async function createJobForUser(message: string): Promise<Job> {
     throw new Error("User not found");
   }
 
+  // const newJobDBEntry = await db
+  //   .insert(assetProcessingJobs)
+  //   .values({
+  //     id: randomUUID(),
+  //     threadId: `thread_${userId}`,
+  //     userId,
+  //     todoKind: "personal",
+  //     status: "created",
+  //     attempts: 0,
+  //     size: message.length,
+  //     message,
+  //   })
+  //   .returning();
+
   const newJob: InsertJob = {
     id: randomUUID(),
     threadId: `thread_${userId}`,
