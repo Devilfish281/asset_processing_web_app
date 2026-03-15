@@ -106,3 +106,35 @@ export async function GET(
   // RETURN RESULTS
   return NextResponse.json(job);
 }
+
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ jobId: string }> },
+) {
+  // Check authentication
+  const { userId } = await auth();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Extract jobId from params
+  const { jobId } = await params;
+
+  const deletedJob = await db
+    .delete(assetProcessingJobs)
+    .where(
+      and(
+        eq(assetProcessingJobs.userId, userId),
+        eq(assetProcessingJobs.id, jobId),
+      ),
+    )
+    .returning();
+
+  // 404 IF JOB NOT FOUND
+  if (deletedJob.length === 0) {
+    return NextResponse.json({ error: "Job not found" }, { status: 404 });
+  }
+
+  // RETURN RESULTS
+  return NextResponse.json(deletedJob[0]);
+}

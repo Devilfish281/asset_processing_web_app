@@ -19,7 +19,6 @@ export default async function ProjectsPage() {
     ({ userId, jobs } = await getJobsForUser());
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 10000));
   // TODO: Fetch projects from database
 
   return (

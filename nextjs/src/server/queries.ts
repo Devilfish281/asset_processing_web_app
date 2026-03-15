@@ -8,7 +8,7 @@
 import "server-only";
 
 import { auth } from "@clerk/nextjs/server";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { db } from "./db";
 import { assetProcessingJobs } from "./db/schema";
 import { randomUUID } from "crypto";
@@ -23,7 +23,7 @@ export async function getJobsForUser(): Promise<{
   const { userId } = await auth();
 
   // Visual Code TERMINAL DEBUGGING
-  console.log(userId);
+  // console.log(userId);
 
   // Verify the user exists
   // note: Verify the user exists
@@ -38,4 +38,37 @@ export async function getJobsForUser(): Promise<{
   });
 
   return { userId, jobs };
+}
+
+export async function getJobById(jobId: string): Promise<{
+  job: Job | undefined;
+}> {
+  "use server";
+
+  // note: Figure out who the user is
+  const { userId } = await auth();
+
+  // Verify the user exists
+  // note: Verify the user exists
+  if (!userId) {
+    throw new Error("User not found");
+  }
+
+  // Note: Fetch job from database
+  // Authenticated
+  // Authorized to view project
+
+  //left side = database column, right side = value you are checking against
+  const job = await db.query.assetProcessingJobs.findFirst({
+    where: and(
+      eq(assetProcessingJobs.id, jobId),
+      eq(assetProcessingJobs.userId, userId),
+    ),
+  });
+
+  // if (!job) {
+  //   throw new Error("Job not found");
+  // }
+
+  return { job };
 }

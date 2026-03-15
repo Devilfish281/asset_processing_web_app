@@ -91,6 +91,8 @@ npx shadcn@latest add scroll-area
 npx shadcn@latest add separator
 npx shadcn@latest add card
 npx shadcn@latest add dropdown-menu
+npx shadcn@latest add skeleton
+npx shadcn@latest add input
 
 # Add axios to the project
 
