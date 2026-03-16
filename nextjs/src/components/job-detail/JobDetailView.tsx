@@ -17,9 +17,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 // import BodyOtherStep from "../BodyOtherStep";
 
 // Lazy load the step components
-const BodyJobInputStep = lazy(() => import("../BodyJobInputStep"));
-const BodyJobAIStep = lazy(() => import("../BodyJobAIStep"));
-const BodyOtherStep = lazy(() => import("../BodyOtherStep"));
+const BodyJobInputStep = lazy(() => import("../detail-body/BodyJobInputStep"));
+const BodyJobAIStep = lazy(() => import("../detail-body/BodyJobAIStep"));
+const BodyOtherStep = lazy(() => import("../detail-body/BodyOtherStep"));
 
 //Your component has three step options:
 // Then findStepIndex(tab) converts a tab name into a number:
@@ -97,8 +97,7 @@ function JobDetailView({ job }: JobDetailViewProps) {
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 bg-white space-y-12">
       {/* max-w-screen-xl to max-w-7xl */}
-      <h1>Job Detail View</h1>
-      <p>Job ID: {job.id}</p>
+
       <JobDetailHeader
         job={job}
         setShowDeleteConfirmation={setShowDeleteConfirmation}
@@ -109,7 +108,12 @@ function JobDetailView({ job }: JobDetailViewProps) {
         steps={steps}
       />
 
-      <JobDetailBody currentStep={currentStep} steps={steps} jobId={job.id} />
+      <JobDetailBody
+        currentStep={currentStep}
+        steps={steps}
+        jobId={job.id}
+        job={job}
+      />
 
       <ConfirmationModal
         isOpen={showDeleteConfirmation}

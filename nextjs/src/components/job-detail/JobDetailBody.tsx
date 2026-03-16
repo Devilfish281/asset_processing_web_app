@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { Skeleton } from "../ui/skeleton";
+import { Job } from "@/server/db/schema";
 
 //Interface for the props of JobDetailBody. It includes currentStep (number), jobId (string), and steps (array of objects with component property which is a lazy-loaded React component).
 interface JobDetailBodyProps {
@@ -7,18 +8,23 @@ interface JobDetailBodyProps {
   jobId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   steps: { component: React.LazyExoticComponent<React.ComponentType<any>> }[];
+  job: Job;
 }
 
 // JobDetailBody is responsible for showing the content of each step in the JobDetailView. It receives the currentStep, jobId, and steps as props. Based on the currentStep, it determines which component to render from the steps array. Each step component is lazy-loaded to optimize performance.
-function JobDetailBody({ currentStep, steps, jobId }: JobDetailBodyProps) {
+function JobDetailBody({ currentStep, steps, jobId, job }: JobDetailBodyProps) {
   // CurrentStepComponent is the React component that corresponds to the current step. It is determined by looking up the steps array using the currentStep index and accessing its component property.
   const CurrentStepComponent = steps[currentStep].component;
 
   // TODO: Look at the current tab and change the project step to show to our users.
-
+  // const steps = [
+  //   { name: "Job Input", tab: "input", component: BodyJobInputStep },
+  //   { name: "Job AI", tab: "ai", component: BodyJobAIStep },
+  //   { name: "Other", tab: "other", component: BodyOtherStep },
+  // ];
   return (
     <Suspense fallback={<StepSkeleton />}>
-      <CurrentStepComponent jobId={jobId} />
+      <CurrentStepComponent jobId={jobId} job={job} />
     </Suspense>
   );
 }

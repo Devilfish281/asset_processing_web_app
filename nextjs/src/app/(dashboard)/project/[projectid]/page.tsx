@@ -18,7 +18,7 @@ export default async function ProjectPage({ params }: Props) {
     return notFound();
   }
 
-  // TODO: Make a query to the DB to grab the job with the ID `params.projectId`
+  // Make a query to the DB to grab the job with the ID `params.projectId`
   const result = await getJobById(projectId);
 
   // If project is not found, return 404
@@ -27,9 +27,10 @@ export default async function ProjectPage({ params }: Props) {
     notFound();
   }
 
-  // TODO: Pass job to our children components
+  // Pass job to our children components
   return (
     <div className="p-2 sm:p-4 md:p-6 lg:p-8 mt-2">
+      <h1 className="text-2xl font-bold mb-4">Project Detail View</h1>
       <JobDetailView job={result.job} />
     </div>
   );
